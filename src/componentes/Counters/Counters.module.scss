@@ -1,0 +1,26 @@
+.counter {
+  display: 'flex';
+  @apply flex flex-row items-center justify-between gap-2 bg-white px-6 py-6 shadow-lg min-h-[120px];
+  &[data-type='approved'] svg {
+    @apply text-lime-400;
+  }
+
+  &[data-type='pending'] svg {
+    @apply text-yellow-400;
+  }
+  &[data-type='remaining'] svg {
+    @apply text-purple-400;
+  }
+  &[data-type='declined'] svg {
+    @apply text-red-400;
+  }
+  
+
+  svg {
+    @apply size-12;
+  }
+
+  section {
+    @apply flex flex-col justify-center text-center;
+  }
+}

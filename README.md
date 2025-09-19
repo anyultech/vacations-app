@@ -6,7 +6,14 @@ descipcion de la app
 
 ## Inicio del proyecto
 
+- Ejecutar el comando `pnpm install && pnpm dev`
+
 ## Decisiones técnicas
+
+- Utilizar tailwindcss para hacer los estilos de una manera mas sencilla
+- Crear un componente `Vacations.jsx` para unificar toda la pantalla
+- Utilizar comando [configurar vite](./llm/commands/configure-vite-project.md)
+- Crear archivo para el editor y el formato [prettier](./.prettierrc)
 
 ## Herramientas
 

@@ -1,0 +1,27 @@
+.requestForm{
+    @apply flex flex-col px-4 gap-4 py-4 bg-white shadow-xl;
+    header {
+        @apply font-bold text-lg;
+    }
+    section{
+        @apply flex flex-col pl-4 gap-4;
+        div{
+            @apply grid grid-cols-4 items-center gap-2;
+        }
+        label{
+            @apply font-bold text-right;
+        }
+        span{
+            @apply text-red-500;
+        }
+    }
+
+    input, textarea {
+        @apply border-gray-400 rounded border p-1 col-span-3;
+    }
+
+    button {
+        @apply w-full bg-lime-400 py-2 rounded shadow-sm;
+    }
+
+}

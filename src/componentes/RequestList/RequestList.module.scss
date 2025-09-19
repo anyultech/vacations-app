@@ -1,0 +1,19 @@
+.requestList {
+  @apply flex flex-col;
+  & > header {
+    @apply grid grid-cols-4 text-center border border-gray-200;
+    > div {
+        @apply border-gray-200 border-l py-2;
+    }
+  }
+  & > section {
+    @apply flex flex-col;
+
+    > div {
+      @apply grid grid-cols-4 border border-gray-200 text-center;
+      div {
+        @apply border-l border-gray-200 py-2;
+      }
+    }
+  }
+}
