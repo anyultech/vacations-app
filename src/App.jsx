@@ -1,8 +1,11 @@
-import { Vacations } from './componentes/Vacations'
+import { Layout } from './componentes/Layout';
+import { Vacations } from './componentes/Vacations';
 
 function App() {
   return (
-    <Vacations />
+    <Layout>
+      <Vacations />
+    </Layout>
   );
 }
 
