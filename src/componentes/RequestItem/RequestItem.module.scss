@@ -1,0 +1,15 @@
+.requestItem {
+  div {
+    @apply items-center [&[data-state='approved']]:text-lime-400 [&[data-state='declined']]:text-red-400 [&[data-state='pending']]:text-yellow-400;
+  }
+
+  div:last-child {
+    @apply flex flex-row justify-center gap-4;
+    div {
+      @apply border-0;
+    }
+    svg {
+      @apply cursor-pointer;
+    }
+  }
+}
