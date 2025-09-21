@@ -12,10 +12,17 @@ export function RequestForm() {
   const [currentRequest, setCurrentRequest] = useState({
     from: dayjs().startOf('day'),
     to: dayjs().startOf('day'),
+    observations: '',
   });
   const [error, setError] = useState('');
 
-  const { handleSubmit } = useSendRequest();
+  const { handleSubmit } = useSendRequest(() => {
+    setCurrentRequest({
+      from: dayjs().startOf('day'),
+      to: dayjs().startOf('day'),
+      observations: '',
+    });
+  });
   const { vacationInfo } = useVacationInfo();
   const { requests } = useVacationRequests();
 
@@ -105,7 +112,17 @@ export function RequestForm() {
         </div>
         <div>
           <label htmlFor="obs">Obs: </label>
-          <textarea name="obs" id="obs" />
+          <textarea
+            name="obs"
+            id="obs"
+            value={currentRequest.observations}
+            onChange={(e) =>
+              setCurrentRequest({
+                ...currentRequest,
+                observations: e.currentTarget.value,
+              })
+            }
+          />
         </div>
         {error && <p>{error}</p>}
         <button disabled={error}>Request</button>

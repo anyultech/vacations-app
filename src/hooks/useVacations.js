@@ -80,7 +80,7 @@ export function useVacationInfo() {
   };
 }
 
-export function useSendRequest() {
+export function useSendRequest(clear) {
   const { create } = useVacationRequests();
   const { update, vacationInfo } = useVacationInfo();
   const { currentUser } = useAppContext();
@@ -110,6 +110,7 @@ export function useSendRequest() {
 
     //update vacationInfo
     await update(updatedInfo);
+    clear();
   }
 
   return { handleSubmit };
