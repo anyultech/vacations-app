@@ -12,10 +12,17 @@ export function RequestForm() {
   const [currentRequest, setCurrentRequest] = useState({
     from: dayjs().startOf('day'),
     to: dayjs().startOf('day'),
+    observations: '',
   });
   const [error, setError] = useState('');
 
-  const { handleSubmit } = useSendRequest();
+  const { handleSubmit } = useSendRequest(() => {
+    setCurrentRequest({
+      from: dayjs().startOf('day'),
+      to: dayjs().startOf('day'),
+      observations: '',
+    });
+  });
   const { vacationInfo } = useVacationInfo();
   const { requests } = useVacationRequests();
 
@@ -24,6 +31,11 @@ export function RequestForm() {
       return setError('From & To are required fields');
 
     const { to, from } = currentRequest;
+
+    const today = dayjs().startOf('day');
+    if (from.isBefore(today) || to.isBefore(today))
+      return setError('From or To should be after today');
+
     if (from.isAfter(to)) return setError("From can't be greater than To");
 
     if (to.diff(from, 'days') >= vacationInfo.remaining)
@@ -105,7 +117,17 @@ export function RequestForm() {
         </div>
         <div>
           <label htmlFor="obs">Obs: </label>
-          <textarea name="obs" id="obs" />
+          <textarea
+            name="obs"
+            id="obs"
+            value={currentRequest.observations}
+            onChange={(e) =>
+              setCurrentRequest({
+                ...currentRequest,
+                observations: e.currentTarget.value,
+              })
+            }
+          />
         </div>
         {error && <p>{error}</p>}
         <button disabled={error}>Request</button>
