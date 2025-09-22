@@ -31,6 +31,11 @@ export function RequestForm() {
       return setError('From & To are required fields');
 
     const { to, from } = currentRequest;
+
+    const today = dayjs().startOf('day');
+    if (from.isBefore(today) || to.isBefore(today))
+      return setError('From or To should be after today');
+
     if (from.isAfter(to)) return setError("From can't be greater than To");
 
     if (to.diff(from, 'days') >= vacationInfo.remaining)
