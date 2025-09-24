@@ -14,7 +14,9 @@
   &[data-type='declined'] svg {
     @apply text-red-400;
   }
-  
+  &[data-type='deleted'] svg {
+    @apply text-red-400;
+  }
 
   svg {
     @apply size-12;

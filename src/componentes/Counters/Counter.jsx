@@ -5,14 +5,17 @@ const ICON_TYPE_MAP = {
   approved: 'checkCircle',
   remaining: 'question',
   pending: 'clock',
-  declined: 'xCircle'
+  declined: 'xCircle',
+  deleted: 'trash'
+   
 };
 
 const TYPE_TEXT_MAP = {
     approved: 'Approved',
   remaining: 'Remaining',
   pending: 'Pending of approval',
-  declined: 'Declined'
+  declined: 'Declined',
+  deleted: 'Deleted'
 }
 
 export function Counter(props) {
@@ -27,3 +30,4 @@ export function Counter(props) {
     </section>
   );
 }
+

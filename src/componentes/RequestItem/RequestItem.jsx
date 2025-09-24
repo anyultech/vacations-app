@@ -5,7 +5,7 @@ import { useRequestActions } from '../../hooks/useVacations';
 
 export function RequestItem(props) {
   const { from, to, state, id } = props;
-  const { decline, approve } = useRequestActions(props);
+  const { decline, approve, remove } = useRequestActions(props);
   return (
     <div data-id={id} className={styles.requestItem}>
       <div>{dayjs(from).format('DD/MM/YYYY')}</div>
@@ -27,6 +27,12 @@ export function RequestItem(props) {
               className="text-lime-400"
               title="Approve"
               onClick={approve}
+            />
+            <Icon
+              icon={'trash'}
+              className="text-red-400"
+              title="Delete"
+              onClick={remove}
             />
           </>
         )}

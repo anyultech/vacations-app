@@ -8,6 +8,7 @@ export const UserVacations = [
     pending: 0,
     remaining: 15,
     declined: 0,
+    deleted: 0,
   },
 ];
 

@@ -18,6 +18,7 @@ export function Vacations() {
             <Counter value={vacationInfo.pending} type="pending" />
             <Counter value={vacationInfo.remaining} type="remaining" />
             <Counter value={vacationInfo.declined} type="declined" />
+            <Counter value={vacationInfo.deleted} type="deleted" />
           </div>
         </div>
       </section>

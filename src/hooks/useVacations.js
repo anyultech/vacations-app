@@ -4,6 +4,7 @@ import { useAppContext } from '../context/AppContext';
 import dayjs from 'dayjs';
 import * as uuid from 'uuid';
 
+// -------------------- Solicitudes --------------------
 export function useVacationRequests() {
   const { currentUser } = useAppContext();
   const queryClient = useQueryClient();
@@ -43,6 +44,7 @@ export function useVacationRequests() {
   return { requests: data, create, update };
 }
 
+// -------------------- Contadores --------------------
 export function useVacationInfo() {
   const { currentUser } = useAppContext();
   const queryClient = useQueryClient();
@@ -64,6 +66,7 @@ export function useVacationInfo() {
       target.declined = updated.declined;
       target.pending = updated.pending;
       target.remaining = updated.remaining;
+      target.deleted = updated.deleted; // 🔹 nuevo campo
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -80,6 +83,7 @@ export function useVacationInfo() {
   };
 }
 
+// -------------------- Enviar nueva solicitud --------------------
 export function useSendRequest(clear) {
   const { create } = useVacationRequests();
   const { update, vacationInfo } = useVacationInfo();
@@ -97,10 +101,10 @@ export function useSendRequest(clear) {
       user: currentUser.username,
     };
 
-    //create new request
+    // Crear nueva solicitud
     await create(newRequest);
 
-    // Get requested days and calculate vacationInfo
+    // Calcular días solicitados y actualizar contadores
     const requestedDays = to.diff(from, 'days') + 1;
     const updatedInfo = {
       ...vacationInfo,
@@ -108,7 +112,7 @@ export function useSendRequest(clear) {
       pending: vacationInfo.pending + requestedDays,
     };
 
-    //update vacationInfo
+    // Actualizar contadores
     await update(updatedInfo);
     clear();
   }
@@ -116,14 +120,14 @@ export function useSendRequest(clear) {
   return { handleSubmit };
 }
 
+// -------------------- Acciones sobre solicitudes --------------------
 export function useRequestActions(request) {
   const { update: updateVacationRequest } = useVacationRequests();
   const { update, vacationInfo } = useVacationInfo();
+  const queryClient = useQueryClient(); // 🔹 mover aquí arriba
 
   const requestedDays = dayjs(request.to).diff(dayjs(request.from), 'days') + 1;
-  const updatedInfo = {
-    ...vacationInfo,
-  };
+  const updatedInfo = { ...vacationInfo };
 
   async function decline() {
     await updateVacationRequest({ ...request, state: 'declined' });
@@ -140,8 +144,24 @@ export function useRequestActions(request) {
     await update(updatedInfo);
   }
 
+  async function remove() {
+    // Eliminar del arreglo principal
+    const index = VacationRequestList.findIndex((item) => item.id === request.id);
+    if (index !== -1) {
+      VacationRequestList.splice(index, 1);
+    }
+
+    // Actualizar contadores
+    updatedInfo.deleted += 1;
+    await update(updatedInfo);
+
+    // Refrescar la lista de requests
+    queryClient.invalidateQueries(['requests']);
+  }
+
   return {
     decline,
     approve,
+    remove,
   };
 }
